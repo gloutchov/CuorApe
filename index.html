@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <title>CuorApe – Gelati Artigianali su Ruote</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="CuorApe – Gelati artigianali su Apecar. Piccole pause di felicità, ovunque tu sia."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <style>
+      /* Fallback minimale se canvas non è supportato */
+      body {
+        margin: 0;
+        background: #f6fbff;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
+      }
+      .no-canvas {
+        display: none;
+        padding: 24px;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .sr-only {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div class="no-canvas">
+        <h1>CuorApe – Gelati Artigianali su Ruote</h1>
+        <p>
+          Questo mini-sito richiede JavaScript per l’esperienza completa in
+          canvas.
+        </p>
+      </div>
+    </noscript>
+
+    <canvas
+      id="stage"
+      aria-label="CuorApe – Mini-sito in canvas"
+      role="img"
+    ></canvas>
+
+    <div class="sr-only" aria-live="polite" id="live"></div>
+
+    <script>
+      (() => {
+        const brand = {
+          name: "CuorApe",
+          tagline: "Gelati Artigianali su Ruote",
+          claim: "Piccole pause di felicità, ovunque tu sia.",
+        };
+
+        // Sezioni del mini-sito
+        const SECTIONS = ["Home", "Filosofia", "Gusti", "Eventi", "Contatti"];
+        let currentSection = "Home";
+
+        // Canvas setup
+        const canvas = document.getElementById("stage");
+        const ctx = canvas.getContext("2d");
+        let W = 0,
+          H = 0,
+          DPR = Math.min(2, window.devicePixelRatio || 1);
+
+        function resize() {
+          W = Math.floor(window.innerWidth);
+          H = Math.floor(window.innerHeight);
+          canvas.width = Math.floor(W * DPR);
+          canvas.height = Math.floor(H * DPR);
+          canvas.style.width = W + "px";
+          canvas.style.height = H + "px";
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        // Posizione e dimensioni del box brand (chip)
+        const brandChip = { x: 16, y: 16, w: 240, h: 40 };
+
+        // Stato animazione
+        let t = 0;
+        const clouds = Array.from({ length: 6 }).map((_, i) => ({
+          x: Math.random() * W,
+          y: 50 + Math.random() * (H * 0.35),
+          s: 0.6 + Math.random() * 1.2,
+          w: 120 + Math.random() * 120,
+        }));
+
+        // Utility
+        function roundRectPath(x, y, w, h, r) {
+          const rr = Math.min(r, w / 2, h / 2);
+          ctx.beginPath();
+          ctx.moveTo(x + rr, y);
+          ctx.arcTo(x + w, y, x + w, y + h, rr);
+          ctx.arcTo(x + w, y + h, x, y + h, rr);
+          ctx.arcTo(x, y + h, x, y, rr);
+          ctx.arcTo(x, y, x + w, y, rr);
+          ctx.closePath();
+        }
+
+        function drawButton(btn) {
+          ctx.save();
+          const { x, y, w, h, label, active = false } = btn;
+          // shadow
+          ctx.shadowColor = "rgba(0,0,0,0.12)";
+          ctx.shadowBlur = 12;
+          ctx.shadowOffsetY = 3;
+          // bg
+          ctx.fillStyle = active ? "#00A67D" : "#ffffff";
+          roundRectPath(x, y, w, h, 12);
+          ctx.fill();
+          // border
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = active ? "#008e6b" : "rgba(0,0,0,0.08)";
+          ctx.stroke();
+          // label
+          ctx.fillStyle = active ? "#ffffff" : "#17324d";
+          ctx.font =
+            "600 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(label, x + w / 2, y + h / 2);
+          ctx.restore();
+        }
+
+        function wrapText(text, x, y, maxWidth, lineHeight) {
+          ctx.save();
+          const words = text.split(" ");
+          let line = "";
+          let yy = y;
+          for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + " ";
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && n > 0) {
+              ctx.fillText(line.trim(), x, yy);
+              line = words[n] + " ";
+              yy += lineHeight;
+            } else {
+              line = testLine;
+            }
+          }
+          if (line) ctx.fillText(line.trim(), x, yy);
+          ctx.restore();
+          return yy;
+        }
+
+        // NAV model (hit test)
+        const nav = {
+          items: [],
+          layout(W) {
+            const pad = 16,
+              btnH = 38;
+            // nav allineata orizzontalmente al brand chip, e centrata verticalmente rispetto ad esso
+            const startX = brandChip.x + brandChip.w + 16;
+            const y = brandChip.y + Math.round((brandChip.h - btnH) / 2);
+            let x = startX;
+            this.items = SECTIONS.map((s) => {
+              const w = Math.max(90, ctx.measureText(s).width + 28);
+              const item = { label: s, x, y, w, h: btnH };
+              x += w + pad;
+              return item;
+            });
+          },
+
+          draw() {
+            this.items.forEach((it) =>
+              drawButton({ ...it, active: it.label === currentSection }),
+            );
+          },
+          hit(mx, my) {
+            return this.items.find(
+              (it) =>
+                mx >= it.x &&
+                mx <= it.x + it.w &&
+                my >= it.y &&
+                my <= it.y + it.h,
+            );
+          },
+        };
+
+        // CTA buttons per sezione
+        const ctaButtons = [];
+        function setCTAButtons() {
+          ctaButtons.length = 0;
+          const baseY = H - 120;
+          const pad = 12,
+            btnW = 200,
+            btnH = 44;
+          let x = 16;
+
+          const pushBtn = (label, section, action) => {
+            ctaButtons.push({
+              x,
+              y: baseY,
+              w: btnW,
+              h: btnH,
+              label,
+              section,
+              action,
+            });
+            x += btnW + pad;
+          };
+
+          if (currentSection === "Home") {
+            pushBtn("Scopri i Gusti", "Gusti");
+            pushBtn("Prenota l'Ape", "Eventi");
+          } else if (currentSection === "Filosofia") {
+            pushBtn("Guarda il Menu", "Gusti");
+            pushBtn("Scrivici", "Contatti");
+          } else if (currentSection === "Gusti") {
+            pushBtn("Chiedi un Assaggio", "Contatti");
+            pushBtn("Prenota l'Ape", "Eventi");
+          } else if (currentSection === "Eventi") {
+            pushBtn("Invia richiesta", "Eventi", "openForm");
+            pushBtn("Parla con noi", "Contatti");
+          } else if (currentSection === "Contatti") {
+            pushBtn("Scrivi su Email", "Contatti", "mailto");
+            pushBtn("Torna alla Home", "Home");
+          }
+        }
+
+        // Form on-canvas per Eventi
+        let formOpen = false;
+        const form = {
+          fields: [
+            {
+              key: "nome",
+              label: "Nome e Cognome",
+              value: "",
+              placeholder: "Mario Rossi",
+            },
+            {
+              key: "email",
+              label: "Email",
+              value: "",
+              placeholder: "mario@example.com",
+            },
+            {
+              key: "data",
+              label: "Data Evento",
+              value: "",
+              placeholder: "2025-06-15",
+            },
+            {
+              key: "luogo",
+              label: "Luogo",
+              value: "",
+              placeholder: "Bologna, Piazza Nettuno",
+            },
+            {
+              key: "note",
+              label: "Note",
+              value: "",
+              placeholder:
+                "Compleanno, 50 persone, gusto preferito: pistacchio",
+            },
+          ],
+          rect: { x: 0, y: 0, w: 0, h: 0 },
+          submitBtn: { x: 0, y: 0, w: 0, h: 0, label: "Invia richiesta" },
+          cancelBtn: { x: 0, y: 0, w: 0, h: 0, label: "Annulla" },
+        };
+
+        function openForm() {
+          formOpen = true;
+          // posizioni calcolate nel draw
+          announce("Modulo prenotazione aperto");
+        }
+        function closeForm() {
+          formOpen = false;
+          announce("Modulo prenotazione chiuso");
+        }
+
+        function announce(text) {
+          const live = document.getElementById("live");
+          if (live) {
+            live.textContent = text;
+          }
+        }
+
+        function drawSky() {
+          const g = ctx.createLinearGradient(0, 0, 0, H);
+          g.addColorStop(0, "#BEE3FF");
+          g.addColorStop(1, "#E8F7FF");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, W, H);
+
+          // Sole
+          ctx.save();
+          ctx.globalAlpha = 0.9;
+          ctx.fillStyle = "#FFD95E";
+          ctx.beginPath();
+          ctx.arc(W - 90, 90, 48, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // nuvole
+          clouds.forEach((c) => {
+            c.x += 0.2 * c.s;
+            if (c.x > W + c.w) c.x = -c.w;
+            drawCloud(c.x, c.y, c.w, 22 * c.s);
+          });
+
+          // prato
+          ctx.fillStyle = "#D7F8D3";
+          ctx.fillRect(0, H * 0.72, W, H * 0.28);
+          ctx.fillStyle = "#9BE29D";
+          ctx.fillRect(0, H * 0.78, W, H * 0.22);
+        }
+
+        function drawCloud(x, y, w, h) {
+          ctx.save();
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.beginPath();
+          const r = h / 2;
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.arc(x + r * 1.4, y - r * 0.2, r * 1.2, 0, Math.PI * 2);
+          ctx.arc(x + r * 2.6, y, r * 1.1, 0, Math.PI * 2);
+          ctx.arc(x + r * 1.6, y + r * 0.7, r * 1.3, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+
+        function drawApeCar(baseX, baseY, scale) {
+          ctx.save();
+          ctx.translate(baseX, baseY);
+          ctx.scale(scale, scale);
+
+          // ombra
+          ctx.fillStyle = "rgba(0,0,0,0.08)";
+          ctx.beginPath();
+          ctx.ellipse(120, 86, 90, 15, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          // carrozzeria
+          ctx.fillStyle = "#FF6B6B";
+          roundRectPath(40, 20, 160, 70, 10);
+          ctx.fill();
+
+          // cabina
+          ctx.fillStyle = "#FF8C8C";
+          roundRectPath(40, 20, 80, 60, 10);
+          ctx.fill();
+
+          // finestrino
+          ctx.fillStyle = "#FFFFFF";
+          roundRectPath(50, 30, 50, 30, 6);
+          ctx.fill();
+
+          // sportello/serving window
+          ctx.fillStyle = "#ffffff";
+          roundRectPath(120, 26, 70, 50, 6);
+          ctx.fill();
+
+          // tetto tenda
+          ctx.fillStyle = "#FFD95E";
+          roundRectPath(115, 18, 85, 12, 6);
+          ctx.fill();
+
+          // ruote
+          function wheel(x, y) {
+            ctx.beginPath();
+            ctx.fillStyle = "#333";
+            ctx.arc(x, y, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = "#eee";
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          wheel(80, 90);
+          wheel(170, 90);
+
+          // logo
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 13px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.textAlign = "center";
+          ctx.fillText("CuorApe", 160, 55);
+
+          // coni “display”
+          ctx.save();
+          const wobble = Math.sin(t / 12) * 2;
+          ctx.translate(155, 76 + wobble);
+          drawCone();
+          ctx.translate(15, -2);
+          drawCone("#67D5B5");
+          ctx.translate(15, 2);
+          drawCone("#A78BFA");
+          ctx.restore();
+
+          ctx.restore();
+        }
+
+        function drawCone(color = "#FF8FB1") {
+          // pallina
+          ctx.beginPath();
+          ctx.fillStyle = color;
+          ctx.arc(0, -12, 7, 0, Math.PI * 2);
+          ctx.fill();
+          // cono
+          ctx.beginPath();
+          ctx.moveTo(-6, -8);
+          ctx.lineTo(6, -8);
+          ctx.lineTo(0, 6);
+          ctx.closePath();
+          ctx.fillStyle = "#E7B27A";
+          ctx.fill();
+          // pattern
+          ctx.strokeStyle = "rgba(0,0,0,0.15)";
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(-3, -7);
+          ctx.lineTo(0, 2);
+          ctx.lineTo(3, -7);
+          ctx.stroke();
+        }
+
+        // Contenuti testuali per sezione
+        const copy = {
+          Home: {
+            title: `${brand.name} – ${brand.tagline}`,
+            body: `Il gelato che ti fa rallentare. Fatto a mano, con ingredienti semplici e stagionali, servito dal nostro Apecar dove c’è bisogno di un sorriso.`,
+            bullets: [
+              "Piccole dimensioni, a misura del bambino che è in noi",
+              "Essenziale, bontà e simpatia",
+              "Le emozioni di una volta...",
+              "Sguardo dritto negli occhi e battute sincere",
+              "Gusti classici e creativi, sempre genuini",
+            ],
+          },
+          Filosofia: {
+            title: "La nostra filosofia",
+            body: `Crediamo nelle cose piccole fatte bene: pochi gusti, tanta passione, attenzione artigianale. 
+Ogni cono è un invito a respirare e a ricordare i sapori di quando eravamo bambini.`,
+            bullets: [
+              "Ingredienti selezionati e filiera trasparente",
+              "Produzione in micro-lotti, tutti i giorni",
+              "Qualità prima della quantità",
+              "Puro Slow-Food, con l'Ape si va piano, ma sano e lontano",
+            ],
+          },
+          Gusti: {
+            title: "I nostri gusti (rotazione stagionale)",
+            body: "Una selezione essenziale, aggiornata in base alla stagione e alla disponibilità locale.",
+            list: [
+              { name: "Dal Lunedì al Venerdì", note: "" },
+              {
+                name: "Pistacchio di Bronte",
+                note: "tostatura leggera, 100% pasta pura",
+              },
+              { name: "Nocciola Gentile", note: "sapida al punto giusto" },
+              { name: "Stracciatella", note: "fiocchi di cioccolato fondente" },
+              {
+                name: "Fragola Viva",
+                note: "sorbetto senza latte, frutta vera",
+              },
+              { name: "Crema CuorApe", note: "limone grattugiato e vaniglia" },
+              { name: "Cioccolato 72%", note: "fondente, pulito, appagante" },
+
+              { name: "Sabato e Domenica", note: "" },
+              {
+                name: "Tiramisù del Nonno",
+                note: "mascarpone fresco e caffè espresso",
+              },
+              {
+                name: "Croccante al Caramello Salato",
+                note: "granella di nocciola e toffee artigianale",
+              },
+              {
+                name: "Amarena CuorApe",
+                note: "crema fiordilatte e amarene candite",
+              },
+              {
+                name: "Menta & Cioccolato",
+                note: "foglie di menta naturale e scaglie fondenti",
+              },
+              {
+                name: "Yogurt e Miele Millefiori",
+                note: "dolce e fresco, con miele locale",
+              },
+              {
+                name: "Pesca Bianca & Basilico",
+                note: "sorbetto aromatico, estivo e profumato",
+              },
+            ],
+          },
+
+          Eventi: {
+            title: "Eventi su misura",
+            body: `Portiamo l’Ape dove vuoi: compleanni, matrimoni, feste aziendali, open day.
+Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
+            bullets: [
+              "Formato minimal, impatto massimo",
+              "Servizio sorridente e discreto",
+              "Opzioni personalizzate per intolleranze",
+            ],
+          },
+          Contatti: {
+            title: "Parliamone dal vivo (o via mail)",
+            body: `Siamo persone, prima che gelatai. Se vuoi chiederci qualcosa, fallo con semplicità.`,
+            info: [
+              "Email: ciao@cuorape.example",
+              "Telefono: +39 333 123 4567",
+              "Base: Bologna (ci muoviamo nelle zone vicine)",
+            ],
+          },
+        };
+
+        // Disegna contenuti di sezione
+        function drawSection() {
+          const pad = 24;
+          const colX = 24;
+          const colW = Math.min(640, W - colX * 2);
+          const c = copy[currentSection];
+
+          // Titolo
+          ctx.fillStyle = "#17324d";
+          ctx.font =
+            "800 32px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+          ctx.fillText(c.title, colX, 110);
+
+          // Sottotitolo / body
+          ctx.font = "400 18px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.fillStyle = "#2b4a66";
+          const bodyEndY = wrapText(c.body, colX, 160, colW, 26) + 8;
+
+          // Base di partenza per l’elenco (subito sotto il body)
+          let baseY = bodyEndY + 30;
+
+          // --- Righe per la sezione corrente ---
+          const lineH = 26;
+          let items = [];
+          if (currentSection === "Gusti" && c.list) {
+            items = c.list.map(
+              (item) => `${item.name}${item.note ? " — " + item.note : ""}`,
+            );
+          } else if (Array.isArray(c.bullets)) {
+            items = c.bullets;
+          } else if (currentSection === "Contatti" && c.info) {
+            items = c.info;
+          }
+
+          // --- Disegno elenco con mini coni gelato ---
+          let y = baseY;
+          items.forEach((text, i) => {
+            const iconX = colX + 4;
+            const textX = colX + 28;
+
+            // cono piccolo
+            ctx.save();
+            ctx.translate(iconX, y + 4);
+            ctx.scale(0.6, 0.6);
+            const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
+            drawCone(colors[i % colors.length]);
+            ctx.restore();
+
+            // testo accanto
+            ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.fillStyle = "#17324d";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText(text, textX, y + 8);
+            y += lineH;
+          });
+
+          // Claim solo in Home
+          if (currentSection === "Home") {
+            ctx.font = "700 20px system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.fillStyle = "#00A67D";
+            ctx.fillText(brand.claim, colX, Math.max(bodyEndY + 56, H * 0.58));
+          }
+        }
+
+        function drawFooter() {
+          ctx.save();
+          ctx.globalAlpha = 0.9;
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.fillRect(0, H - 64, W, 64);
+          ctx.restore();
+
+          ctx.fillStyle = "#5a768f";
+          ctx.font = "500 12px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(
+            "© " +
+              new Date().getFullYear() +
+              " " +
+              brand.name +
+              " — Piccole pause di felicità.",
+            16,
+            H - 32,
+          );
+
+          // CTA
+          setCTAButtons();
+          ctaButtons.forEach((b) => drawButton(b));
+        }
+
+        function drawHeader() {
+          // brand chip (usa brandChip per posizione/dimensioni)
+          ctx.save();
+          ctx.shadowColor = "rgba(0,0,0,0.12)";
+          ctx.shadowBlur = 10;
+          ctx.shadowOffsetY = 2;
+          roundRectPath(brandChip.x, brandChip.y, brandChip.w, brandChip.h, 10);
+          ctx.fillStyle = "#ffffff";
+          ctx.fill();
+
+          // tre “palline” colorate
+          const midY = brandChip.y + brandChip.h / 2;
+          let cx = brandChip.x + 20;
+          ctx.fillStyle = "#FF6B6B";
+          ctx.beginPath();
+          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
+          ctx.fill();
+          cx += 20;
+          ctx.fillStyle = "#FFD95E";
+          ctx.beginPath();
+          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
+          ctx.fill();
+          cx += 20;
+          ctx.fillStyle = "#67D5B5";
+          ctx.beginPath();
+          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
+          ctx.fill();
+
+          // testo brand
+          ctx.fillStyle = "#17324d";
+          ctx.font = "800 16px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(brand.name, brandChip.x + 80, brandChip.y + 14 + 6); // titolo
+
+          // ctx.font = "600 12px system-ui, -apple-system, Segoe UI, Roboto";
+          // ctx.fillStyle = "#5a768f";
+          // ctx.fillText(brand.tagline, brandChip.x + 80, brandChip.y + brandChip.h - 12 - 6); // sottotitolo
+
+          ctx.restore();
+
+          // nav
+          nav.layout(W);
+          nav.draw();
+        }
+
+        // Posizionamento Apecar animata nella Home; statica altrove
+        function drawHero() {
+          const y = H * 0.7;
+          const baseX =
+            currentSection === "Home"
+              ? W * 0.55 + Math.sin(t / 35) * 15
+              : W * 0.6;
+          const scale = Math.min(1.3, Math.max(0.8, W / 1000));
+          drawApeCar(baseX, y, scale);
+        }
+
+        // Form rendering
+        // Form rendering
+        function drawForm() {
+          if (!formOpen) return;
+
+          const w = Math.min(560, W - 40);
+          // pannello un po' più alto per non schiacciare i bottoni
+          const h = Math.min(560, H - 120);
+          const x = (W - w) / 2;
+          const y = (H - h) / 2;
+          form.rect = { x, y, w, h };
+
+          // backdrop
+          ctx.save();
+          ctx.fillStyle = "rgba(0,0,0,0.25)";
+          ctx.fillRect(0, 0, W, H);
+          ctx.restore();
+
+          // panel
+          ctx.save();
+          ctx.shadowColor = "rgba(0,0,0,0.25)";
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 6;
+          roundRectPath(x, y, w, h, 14);
+          ctx.fillStyle = "#ffffff";
+          ctx.fill();
+          ctx.restore();
+
+          // title
+          ctx.fillStyle = "#17324d";
+          ctx.font = "800 20px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+          ctx.fillText("Prenota l'Ape per il tuo evento", x + 18, y + 16);
+
+          // fields
+          ctx.font = "600 12px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.fillStyle = "#5a768f";
+
+          const startY = y + 56;
+          let yy = startY;
+          const labelH = 16,
+            inputH = 32,
+            gap = 18;
+          const inputX = x + 18;
+          const inputW = w - 36;
+
+          form.fields.forEach((f, idx) => {
+            ctx.fillText(f.label, inputX, yy);
+            yy += labelH + 4;
+
+            // input bg
+            ctx.fillStyle = "#f2f6fb";
+            roundRectPath(inputX, yy, inputW, inputH, 8);
+            ctx.fill();
+
+            ctx.fillStyle = f.value ? "#17324d" : "#7f98ad";
+            ctx.font = f.value
+              ? "600 14px system-ui, -apple-system, Segoe UI, Roboto"
+              : "400 14px system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            const textToShow = f.value || f.placeholder;
+            ctx.fillText(textToShow, inputX + 12, yy + inputH / 2);
+
+            // store clickable rect
+            f.rect = { x: inputX, y: yy, w: inputW, h: inputH };
+
+            // niente gap dopo l’ultimo campo
+            yy += inputH + (idx === form.fields.length - 1 ? 0 : gap);
+          });
+
+          // posizione bottoni: sempre sotto i campi, con margine
+          const buttonsY = Math.max(y + h - 18 - 38, yy + 24);
+          form.submitBtn = {
+            x: x + w - 18 - 160,
+            y: buttonsY,
+            w: 160,
+            h: 38,
+            label: "Invia richiesta",
+          };
+          form.cancelBtn = {
+            x: x + 18,
+            y: buttonsY,
+            w: 120,
+            h: 38,
+            label: "Annulla",
+          };
+          drawButton(form.cancelBtn);
+          drawButton({ ...form.submitBtn, active: true });
+        }
+
+        // Input “virtuale” per campi form (prompt)
+        function promptField(field) {
+          const v = window.prompt(
+            field.label,
+            field.value || field.placeholder || "",
+          );
+          if (v !== null) field.value = v.trim();
+        }
+
+        // Gestione click
+        canvas.addEventListener("click", (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const mx = e.clientX - rect.left;
+          const my = e.clientY - rect.top;
+
+          // Form aperto ha priorità
+          if (formOpen) {
+            // click campi
+            for (const f of form.fields) {
+              const r = f.rect;
+              if (
+                r &&
+                mx >= r.x &&
+                mx <= r.x + r.w &&
+                my >= r.y &&
+                my <= r.y + r.h
+              ) {
+                promptField(f);
+                return;
+              }
+            }
+            // submit / cancel
+            if (hit(mx, my, form.submitBtn)) {
+              // validazione semplice
+              const nome =
+                form.fields.find((f) => f.key === "nome")?.value || "";
+              const email =
+                form.fields.find((f) => f.key === "email")?.value || "";
+              if (!nome || !email || !email.includes("@")) {
+                alert("Per favore inserisci almeno Nome ed Email validi.");
+                return;
+              }
+              const data =
+                form.fields.find((f) => f.key === "data")?.value || "";
+              const luogo =
+                form.fields.find((f) => f.key === "luogo")?.value || "";
+              const note =
+                form.fields.find((f) => f.key === "note")?.value || "";
+
+              const subject = encodeURIComponent(`Richiesta Ape – ${nome}`);
+              const body = encodeURIComponent(
+                `Ciao CuorApe,
+vorrei prenotare l'Ape per un evento.
+
+Nome: ${nome}
+Email: ${email}
+Data: ${data}
+Luogo: ${luogo}
+
+Note:
+${note}
+
+Grazie!`,
+              );
+              const mail = `mailto:ciao@cuorape.example?subject=${subject}&body=${body}`;
+              window.location.href = mail;
+              closeForm();
+              return;
+            }
+            if (hit(mx, my, form.cancelBtn)) {
+              closeForm();
+              return;
+            }
+            // click fuori chiude
+            if (!pointInRect(mx, my, form.rect)) {
+              closeForm();
+            }
+            return;
+          }
+
+          // nav
+          const n = nav.hit(mx, my);
+          if (n) {
+            currentSection = n.label;
+            announce(`Sezione ${currentSection}`);
+            return;
+          }
+
+          // CTA
+          const b = ctaButtons.find((b) => hit(mx, my, b));
+          if (b) {
+            if (b.action === "openForm") {
+              openForm();
+              return;
+            }
+            if (b.action === "mailto") {
+              window.location.href =
+                "mailto:ciao@cuorape.example?subject=Info%20CuorApe&body=Ciao%20CuorApe%2C%20vorrei%20maggiori%20informazioni.";
+              return;
+            }
+            currentSection = b.section || currentSection;
+            announce(`Sezione ${currentSection}`);
+          }
+        });
+
+        function hit(mx, my, btn) {
+          if (!btn) return false;
+          return (
+            mx >= btn.x &&
+            mx <= btn.x + btn.w &&
+            my >= btn.y &&
+            my <= btn.y + btn.h
+          );
+        }
+        function pointInRect(mx, my, r) {
+          if (!r) return false;
+          return mx >= r.x && mx <= r.x + r.w && my >= r.y && my <= r.y + r.h;
+        }
+
+        // LOOP
+        function loop() {
+          t++;
+          drawSky();
+          drawHeader();
+          drawSection();
+          drawHero();
+          drawFooter();
+          drawForm();
+          requestAnimationFrame(loop);
+        }
+        loop();
+      })();
+    </script>
+  </body>
+</html>
+
