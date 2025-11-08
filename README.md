@@ -34,12 +34,13 @@ Partendo da queste basi, ecco ciò che è stato usato:
 2. Brainstorming con AI: Progetto chatGPT con istruzioni ad hoc
 3. Definizione del Brand: Progetto chatGPT con istruzioni ad hoc
 4. Creazione Landing Page: Progetto chatGPT con istruzioni ad hoc
-5. Sviluppo della Campagna di Marketing: Progetto chatGPT con istruzioni ad hoc
-6. Creazione dei Video Promozionali:
+5. Creazione di foto realistiche del brand da inserire sul sito
+6. Sviluppo della Campagna di Marketing: Progetto chatGPT con istruzioni ad hoc
+7. Creazione dei Video Promozionali:
    - Script delle varie scene: Progetto chatGPT con istruzioni ad hoc
    - Making delle Clip: Sora 2
-   - Montaggio: Final Cut Pro X / Apple Movie
-7. Analisi di mercato finale: Progetto chatGPT con istruzioni ad hoc
+   - Montaggio: Final Cut Pro X
+8. Analisi di mercato finale: Progetto chatGPT con istruzioni ad hoc
 
 ## Account Necessari
 
@@ -55,6 +56,6 @@ Il progetto è quello di uno slow-food rafforzato da una esperienza in stile 'am
 In questo progetto ci si concentra sul Main Target.
 
 ## Tempo stimato per lo sviluppo
-Il progetto prevede di dedicare 1 ora di lavoro, ogni giorno, per sette giorni lavorativi, prima della presentazione ufficiale.
+Il progetto prevede di dedicare 1 ora di lavoro, ogni giorno, per 7 giorni lavorativi, prima della presentazione ufficiale.
 
 

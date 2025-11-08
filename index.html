@@ -82,6 +82,41 @@
           H = 0,
           DPR = Math.min(2, window.devicePixelRatio || 1);
 
+        // Gallery
+        const philosophyGalleryRects = [];
+        let enlargedItem = null;
+        const philosophyGalleryItems = [
+          { src: "img/foto1.png", caption: "Apecar trovata nel fienile del nonno." },
+          { src: "img/foto2.png", caption: "Io che restauro la cabina dell'Apecar." },
+          { src: "img/foto3.png", caption: "Io che restauro il fianco dell'Apecar." },
+          { src: "img/foto4.png", caption: "Pronto per il primo giorno di lavoro." },
+          { src: "img/foto5.png", caption: "La mia nuova Apecar." },
+          { src: "img/foto6.png", caption: "Uno dei miei coni gelato." },
+          { src: "img/foto7.png", caption: "Io e mio nonno..." },
+        ];
+
+        philosophyGalleryItems.forEach((item) => {
+          const img = new Image();
+          img.src = item.src;
+          item.img = img;
+        });
+
+        // Eventi Gallery
+        const eventGalleryRects = [];
+        const eventGalleryItems = [
+            { src: "feste/festa1.png", caption: "Un gelato per strada." },
+            { src: "feste/festa2.png", caption: "Il break giusto per un manager." },
+            { src: "feste/festa3.png", caption: "Il break giusto per un manager." },
+            { src: "feste/festa4.png", caption: "Al parco coi bambini." },
+            { src: "feste/festa5.png", caption: "Festa di Compleanno." },
+            { src: "feste/festa6.png", caption: "Fuori da scuola." },
+        ];
+        eventGalleryItems.forEach((item) => {
+          const img = new Image();
+          img.src = item.src;
+          item.img = img;
+        });
+
         function resize() {
           W = Math.floor(window.innerWidth);
           H = Math.floor(window.innerHeight);
@@ -440,23 +475,10 @@
           Home: {
             title: `${brand.name} – ${brand.tagline}`,
             body: `Il gelato che ti fa rallentare. Fatto a mano, con ingredienti semplici e stagionali, servito dal nostro Apecar dove c’è bisogno di un sorriso.`,
-            bullets: [
-              "Piccole dimensioni, a misura del bambino che è in noi",
-              "Essenziale, bontà e simpatia",
-              "Le emozioni di una volta...",
-              "Sguardo dritto negli occhi e battute sincere",
-              "Gusti classici e creativi, sempre genuini",
-            ],
           },
           Filosofia: {
             title: "La nostra filosofia",
             body: `Il mio nome è Alberto, e faccio il gelataio. Ma non sono sempre stato un gelataio. Ero un uomo d'affari, sempre di corsa, sempre al telefono, preda di impegni, lavoro, appuntamenti, e... A un certo punto sono andato in burnout. Si, mi sono ammalato. Ho perso il lavoro. Ho lasciato la città. E nel tentativo di raccogliere ciò che era rimasto della mia persona, mi sono rifugiato nella fattoria di mio nonno. Quanti ricordi... Da bambino passavo tutte le estati in quella fattoria. Forse sono stati i momenti più felici della mia vita. Poi, un giorno, nel granaio, trovo la vecchia Apecar del nonno. Ormai è arrugginita, un rottame... E un po' mi somiglia. Forse è per questo che ho deciso di restaurarla. Mentre lavoravo sull'Apecar, piano piano, è nata questa folle idea di dargli una seconda vita, e di trasformarla in un furgoncino dei gelati. E alla fine eccomi qui. Fare il gelataio mi ha aiutato a rinascere, a ritrovare me stesso, e ora sono davvero soddisfatto. Nei miei gelati metto tutto ciò che ho imparato dai miei sbagli. I miei gelati sono lo specchio di ciò che sono ora: pochi gusti, tanta passione, attenzione artigianale. Ogni cono è un invito a respirare e a ricordare i sapori di quando eravamo bambini.`,
-            bullets: [
-              "Ingredienti selezionati e filiera trasparente",
-              "Produzione in micro-lotti, tutti i giorni",
-              "Qualità prima della quantità",
-              "Puro Slow-Food, con l'Ape si va piano, ma sano e lontano",
-            ],
           },
           Gusti: {
             title: "I nostri gusti (rotazione stagionale)",
@@ -509,9 +531,18 @@
             body: `Portiamo l’Ape dove vuoi: compleanni, matrimoni, feste aziendali, open day.
 Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
             bullets: [
+              "Piccole dimensioni, a misura del bambino che è in noi",
+              "Essenziale, bontà e simpatia",
+              "Le emozioni di una volta...",
+              "Sguardo dritto negli occhi e battute sincere",
+              "Gusti classici e creativi, sempre genuini",
+              "Ingredienti selezionati e filiera trasparente",
+              "Produzione in micro-lotti, tutti i giorni",
+              "Qualità prima della quantità",
               "Formato minimal, impatto massimo",
               "Servizio sorridente e discreto",
               "Opzioni personalizzate per intolleranze",
+              "Puro Slow-Food, con l'Ape si va piano, ma sano e lontano",
             ],
           },
           Contatti: {
@@ -524,6 +555,74 @@ Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
             ],
           },
         };
+
+        function drawGallery(galleryItems, galleryRects, startX, startY, maxWidth) {
+          galleryRects.length = 0;
+          const thumbW = 120;
+          const thumbH = 90;
+          const captionH = 40; // Space for caption
+          const gap = 12;
+          let x = startX;
+          let y = startY;
+
+          galleryItems.forEach((item) => {
+            if (x + thumbW > startX + maxWidth) {
+              x = startX;
+              y += thumbH + captionH + gap;
+            }
+            const rect = { x, y, w: thumbW, h: thumbH + captionH, item };
+            galleryRects.push(rect);
+
+            // Draw image
+            ctx.save();
+            ctx.shadowColor = "rgba(0,0,0,0.15)";
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetY = 2;
+            roundRectPath(x, y, thumbW, thumbH, 8);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+            ctx.clip(); 
+            if (item.img.complete && item.img.naturalWidth > 0) {
+              const imgRatio = item.img.naturalWidth / item.img.naturalHeight;
+              const thumbRatio = thumbW / thumbH;
+              let sw, sh, sx, sy;
+              if (imgRatio > thumbRatio) {
+                sh = item.img.naturalHeight;
+                sw = sh * thumbRatio;
+                sx = (item.img.naturalWidth - sw) / 2;
+                sy = 0;
+              } else {
+                sw = item.img.naturalWidth;
+                sh = sw / thumbRatio;
+                sx = 0;
+                sy = (item.img.naturalHeight - sh) / 2;
+              }
+              ctx.drawImage(item.img, sx, sy, sw, sh, x, y, thumbW, thumbH);
+            } else {
+              ctx.fillStyle = "#e0e0e0";
+              ctx.fillRect(x, y, thumbW, thumbH);
+            }
+            ctx.restore();
+            
+            // Border
+            ctx.save()
+            roundRectPath(x, y, thumbW, thumbH, 8);
+            ctx.strokeStyle = "rgba(0,0,0,0.1)";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw caption
+            ctx.fillStyle = "#2b4a66";
+            ctx.font = "500 11px system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.textAlign = "center";
+            wrapText(item.caption, x + thumbW / 2, y + thumbH + 10, thumbW - 4, 13);
+
+
+            x += thumbW + gap;
+          });
+          return y + thumbH + captionH;
+        }
 
         // Disegna contenuti di sezione
         function drawSection() {
@@ -543,46 +642,71 @@ Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
           // Sottotitolo / body
           ctx.font = "400 18px system-ui, -apple-system, Segoe UI, Roboto";
           ctx.fillStyle = "#2b4a66";
-          const bodyEndY = wrapText(c.body, colX, 160, colW, 26) + 8;
+          let bodyEndY = wrapText(c.body, colX, 160, colW, 26) + 8;
 
-          // Base di partenza per l’elenco (subito sotto il body)
-          let baseY = bodyEndY + 30;
-
-          // --- Righe per la sezione corrente ---
-          const lineH = 26;
-          let items = [];
-          if (currentSection === "Gusti" && c.list) {
-            items = c.list.map(
-              (item) => `${item.name}${item.note ? " — " + item.note : ""}`,
-            );
-          } else if (Array.isArray(c.bullets)) {
-            items = c.bullets;
-          } else if (currentSection === "Contatti" && c.info) {
-            items = c.info;
+          // --- Contenuti specifici per sezione ---
+          
+          if (currentSection === "Filosofia") {
+            bodyEndY = drawGallery(philosophyGalleryItems, philosophyGalleryRects, colX, bodyEndY + 24, colW) + 24;
+          } 
+          else if (currentSection === "Eventi") {
+            let baseY = bodyEndY + 30;
+            const lineH = 26;
+            if (Array.isArray(c.bullets)) {
+              let y = baseY;
+              c.bullets.forEach((text, i) => {
+                const iconX = colX + 4;
+                const textX = colX + 28;
+                ctx.save();
+                ctx.translate(iconX, y + 4);
+                ctx.scale(0.6, 0.6);
+                const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
+                drawCone(colors[i % colors.length]);
+                ctx.restore();
+                ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
+                ctx.fillStyle = "#17324d";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "alphabetic";
+                ctx.fillText(text, textX, y + 8);
+                y += lineH;
+              });
+              bodyEndY = y;
+            }
+            bodyEndY = drawGallery(eventGalleryItems, eventGalleryRects, colX, bodyEndY + 24, colW) + 24;
           }
-
-          // --- Disegno elenco con mini coni gelato ---
-          let y = baseY;
-          items.forEach((text, i) => {
-            const iconX = colX + 4;
-            const textX = colX + 28;
-
-            // cono piccolo
-            ctx.save();
-            ctx.translate(iconX, y + 4);
-            ctx.scale(0.6, 0.6);
-            const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
-            drawCone(colors[i % colors.length]);
-            ctx.restore();
-
-            // testo accanto
-            ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
-            ctx.fillStyle = "#17324d";
-            ctx.textAlign = "left";
-            ctx.textBaseline = "alphabetic";
-            ctx.fillText(text, textX, y + 8);
-            y += lineH;
-          });
+          else {
+            let baseY = bodyEndY + 30;
+            const lineH = 26;
+            let items = [];
+            if (currentSection === "Gusti" && c.list) {
+              items = c.list.map(
+                (item) => `${item.name}${item.note ? " — " + item.note : ""}`,
+              );
+            } else if (currentSection === "Contatti" && c.info) {
+              items = c.info;
+            }
+            
+            if (items.length > 0) {
+              let y = baseY;
+              items.forEach((text, i) => {
+                const iconX = colX + 4;
+                const textX = colX + 28;
+                ctx.save();
+                ctx.translate(iconX, y + 4);
+                ctx.scale(0.6, 0.6);
+                const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
+                drawCone(colors[i % colors.length]);
+                ctx.restore();
+                ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
+                ctx.fillStyle = "#17324d";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "alphabetic";
+                ctx.fillText(text, textX, y + 8);
+                y += lineH;
+              });
+              bodyEndY = y;
+            }
+          }
 
           // Claim solo in Home
           if (currentSection === "Home") {
@@ -666,16 +790,15 @@ Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
 
         // Posizionamento Apecar animata nella Home; statica altrove
         function drawHero() {
-          const y = H * 0.7;
+          const y = H * 0.6;
           const baseX =
             currentSection === "Home"
               ? W * 0.55 + Math.sin(t / 35) * 15
               : W * 0.6;
-          const scale = Math.min(1.3, Math.max(0.8, W / 1000));
+          const scale = Math.min(1.3, Math.max(0.8, W / 1000)) * 2;
           drawApeCar(baseX, y, scale);
         }
 
-        // Form rendering
         // Form rendering
         function drawForm() {
           if (!formOpen) return;
@@ -767,6 +890,56 @@ Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
           drawButton({ ...form.submitBtn, active: true });
         }
 
+        function drawLightbox() {
+          if (!enlargedItem) return;
+
+          ctx.save();
+          // Backdrop
+          ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+          ctx.fillRect(0, 0, W, H);
+
+          // Image
+          const pad = 80; // More padding
+          const maxW = W - pad * 2;
+          const maxH = H - pad * 2;
+          const img = enlargedItem.img;
+          const imgRatio = img.naturalWidth / img.naturalHeight;
+          
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+
+          if (w > maxW) {
+            w = maxW;
+            h = w / imgRatio;
+          }
+          if (h > maxH) {
+            h = maxH;
+            w = h * imgRatio;
+          }
+
+          const x = (W - w) / 2;
+          const y = (H - h) / 2;
+          
+          ctx.shadowColor = "rgba(0,0,0,0.5)";
+          ctx.shadowBlur = 30;
+          ctx.shadowOffsetY = 10;
+
+          ctx.drawImage(img, x, y, w, h);
+          ctx.shadowColor = "transparent"; // No shadow for text
+
+          // Caption
+          ctx.fillStyle = "#fff";
+          ctx.textAlign = "center";
+          ctx.font = "400 16px system-ui, -apple-system, Segoe UI, Roboto";
+          wrapText(enlargedItem.caption, W / 2, y + h + 20, W - 40, 22);
+          
+          // Close button (text)
+          ctx.font = "600 14px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.fillText("Chiudi (clicca ovunque)", W / 2, H - 24);
+
+          ctx.restore();
+        }
+
         // Input “virtuale” per campi form (prompt)
         function promptField(field) {
           const v = window.prompt(
@@ -781,6 +954,12 @@ Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
           const rect = canvas.getBoundingClientRect();
           const mx = e.clientX - rect.left;
           const my = e.clientY - rect.top;
+
+          // Lightbox ha priorità
+          if (enlargedItem) {
+            enlargedItem = null;
+            return;
+          }
 
           // Form aperto ha priorità
           if (formOpen) {
@@ -847,6 +1026,21 @@ Grazie!`,
             return;
           }
 
+          // Gallery
+          if (currentSection === "Filosofia") {
+            const clickedItem = philosophyGalleryRects.find((r) => hit(mx, my, r));
+            if (clickedItem) {
+              enlargedItem = clickedItem.item;
+              return;
+            }
+          } else if (currentSection === "Eventi") {
+            const clickedItem = eventGalleryRects.find((r) => hit(mx, my, r));
+            if (clickedItem) {
+              enlargedItem = clickedItem.item;
+              return;
+            }
+          }
+
           // nav
           const n = nav.hit(mx, my);
           if (n) {
@@ -889,17 +1083,17 @@ Grazie!`,
         // LOOP
         function loop() {
           t++;
+          ctx.clearRect(0, 0, W, H);
           drawSky();
           drawHeader();
           drawSection();
           drawHero();
           drawFooter();
           drawForm();
+          drawLightbox();
           requestAnimationFrame(loop);
         }
         loop();
       })();
     </script>
-  </body>
-</html>
 
