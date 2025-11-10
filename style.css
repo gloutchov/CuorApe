@@ -97,14 +97,104 @@ section .section-intro {
 
 /* Sezione Home (Hero) */
 #home {
-  background: linear-gradient(to bottom, #BEE3FF, #E8F7FF);
+  background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.2) 35%,
+      rgba(255, 255, 255, 0.85) 75%,
+      rgba(255, 255, 255, 0.92) 100%
+    ),
+    url('sfondi/sfondo3.png');
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
   padding: 100px 0;
   text-align: center;
 }
 
+#filosofia {
+  position: relative;
+  overflow: hidden;
+  background: #0c243d;
+  color: #fdfefe;
+}
+
+#filosofia::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(12, 36, 61, 0.35), rgba(255, 255, 255, 0.3));
+  z-index: 1;
+}
+
+.section-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#filosofia .container {
+  position: relative;
+  z-index: 2;
+}
+
+#filosofia .section-intro {
+  color: rgba(245, 249, 255, 0.9);
+}
+
+#filosofia .gallery-item {
+  background: rgba(255, 255, 255, 0.9);
+  color: #17324d;
+}
+
+#filosofia .gallery-item figcaption {
+  color: #17324d;
+}
+
+#eventi {
+  position: relative;
+  overflow: hidden;
+  background: #fef7f0;
+}
+
+#eventi::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 247, 240, 0.75), rgba(255, 255, 255, 0.35));
+  z-index: 1;
+}
+
+#eventi .container {
+  position: relative;
+  z-index: 2;
+}
+
+#eventi .section-intro {
+  color: #4a3218;
+}
+
+#eventi .gallery-item {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+#home .container {
+  margin-left: auto;
+  margin-right: 5%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .home-logo {
-    max-width: 1000px; /* Imposta la larghezza massima del logo */
-    margin: 14 auto 14px auto; /* Centra il logo e gli dà spazio sopra e sotto */
+  max-width: 1000px; /* Imposta la larghezza massima del logo */
+  margin: 14px auto; /* Centra il logo nella colonna */
 }
 
 #home h1 {
@@ -176,6 +266,30 @@ section .section-intro {
 }
 
 /* Sezione Gusti e Contatti (liste) */
+#gusti {
+  background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.45) 45%,
+      rgba(255, 255, 255, 0.85) 100%
+    ),
+    url('sfondi/sfondo1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#gusti .container {
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: center;
+}
+
+#gusti h2,
+#gusti .section-intro {
+  text-align: center;
+}
+
 .feature-list {
   list-style: none;
   padding: 0;
@@ -184,18 +298,55 @@ section .section-intro {
 }
 
 .feature-list li {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  padding: 12px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #e8f7ff;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 4px;
 }
 
 .feature-list li:before {
   content: '🍦'; /* Icona cono gelato */
-  margin-right: 12px;
+  margin-right: 0;
+  margin-bottom: 4px;
   font-size: 20px;
+}
+
+#gusti .feature-list {
+  max-width: 520px;
+  margin: 48px auto 0 auto;
+}
+
+#gusti .feature-list li {
+  border-bottom: none;
+  justify-content: center;
+  text-align: center;
+}
+
+.taste-name {
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.taste-desc {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2b4a66;
+}
+
+/* Sezione Contatti - sfondo personalizzato */
+#contatti {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.65)
+    ),
+    url('sfondi/sfondo2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Sezione Contatti */
@@ -348,10 +499,41 @@ footer {
 
   #home {
     padding: 80px 0;
+    background-position: center;
   }
 
   #home h1 {
     font-size: 32px;
+  }
+
+  #home .container {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .home-logo {
+    margin: 14px auto;
+  }
+
+  #gusti .container {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #gusti h2,
+  #gusti .section-intro {
+    text-align: center;
+  }
+
+  #gusti .feature-list {
+    max-width: 100%;
+    margin: 48px auto 0 auto;
+  }
+
+  #gusti .feature-list li {
+    justify-content: center;
+    text-align: center;
   }
 
   .gallery {
