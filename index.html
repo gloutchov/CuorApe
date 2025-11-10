@@ -1,1099 +1,296 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CuorApe – Gelati Artigianali su Ruote</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="CuorApe – Gelati artigianali su Apecar. Piccole pause di felicità, ovunque tu sia."
-    />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <style>
-      /* Fallback minimale se canvas non è supportato */
-      body {
-        margin: 0;
-        background: #f6fbff;
-        font-family:
-          system-ui,
-          -apple-system,
-          Segoe UI,
-          Roboto,
-          Helvetica,
-          Arial,
-          "Apple Color Emoji",
-          "Segoe UI Emoji";
-      }
-      .no-canvas {
-        display: none;
-        padding: 24px;
-        max-width: 720px;
-        margin: 0 auto;
-      }
-      .sr-only {
-        position: absolute;
-        left: -10000px;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-      }
-      canvas {
-        display: block;
-        width: 100vw;
-        height: 100vh;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>
-      <div class="no-canvas">
-        <h1>CuorApe – Gelati Artigianali su Ruote</h1>
-        <p>
-          Questo mini-sito richiede JavaScript per l’esperienza completa in
-          canvas.
-        </p>
-      </div>
-    </noscript>
+    <meta name="description" content="CuorApe – Gelati artigianali su Apecar. Piccole pause di felicità, ovunque tu sia.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <canvas
-      id="stage"
-      aria-label="CuorApe – Mini-sito in canvas"
-      role="img"
-    ></canvas>
+    <header>
+        <a href="#home" class="logo">
+            <img src="logo.svg" alt="CuorApe Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#filosofia">Filosofia</a></li>
+                <li><a href="#gusti">Gusti</a></li>
+                <li><a href="#eventi">Eventi</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="sr-only" aria-live="polite" id="live"></div>
+    <main>
+        <!-- SEZIONE HOME -->
+        <section id="home">
+            <div class="container">                
+                <img src="logo.svg" alt="CuorApe Logo" class="home-logo">				
+				<h1>Gelati Artigianali su Ruote</h1>
+                <a href="#eventi" class="cta-button">Prenota un Evento</a>
+                <p class="tagline">Piccole pause di felicità, ovunque tu sia.</p>
+            </div>
+        </section>
+
+        <!-- SEZIONE FILOSOFIA -->
+        <section id="filosofia">
+            <div class="container">
+                <h2>La nostra filosofia</h2>
+                <p class="section-intro">Il mio nome è Alberto, e faccio il gelataio. Ma non sono sempre stato un gelataio. Ero un uomo d'affari, sempre di corsa, sempre al telefono, preda di impegni, lavoro, appuntamenti, e... A un certo punto sono andato in burnout. Si, mi sono ammalato. Ho perso il lavoro. Ho lasciato la città. E nel tentativo di raccogliere ciò che era rimasto della mia persona, mi sono rifugiato nella fattoria di mio nonno. Quanti ricordi... Da bambino passavo tutte le estati in quella fattoria. Forse sono stati i momenti più felici della mia vita. Poi, un giorno, nel granaio, trovo la vecchia Apecar del nonno. Ormai è arrugginita, un rottame... E un po' mi somiglia. Forse è per questo che ho deciso di restaurarla. Mentre lavoravo sull'Apecar, piano piano, è nata questa folle idea di dargli una seconda vita, e di trasformarla in un furgoncino dei gelati. E alla fine eccomi qui. Fare il gelataio mi ha aiutato a rinascere, a ritrovare me stesso, e ora sono davvero soddisfatto. Nei miei gelati metto tutto ciò che ho imparato dai miei sbagli. I miei gelati sono lo specchio di ciò che sono ora: pochi gusti, tanta passione, attenzione artigianale. Ogni cono è un invito a respirare e a ricordare i sapori di quando eravamo bambini.</p>
+                <div class="gallery">
+                    <figure class="gallery-item">
+                        <img src="foto/foto1.png" alt="Apecar trovata nel fienile">
+                        <figcaption>Apecar trovata nel fienile del nonno.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto2.png" alt="Restauro cabina Apecar">
+                        <figcaption>Io che restauro la cabina dell'Apecar.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto3.png" alt="Restauro fianco Apecar">
+                        <figcaption>Io che restauro il fianco dell'Apecar.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto4.png" alt="Pronto per il primo giorno di lavoro">
+                        <figcaption>Pronto per il primo giorno di lavoro.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto5.png" alt="La nuova Apecar">
+                        <figcaption>La mia nuova Apecar.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto6.png" alt="Cono gelato">
+                        <figcaption>Uno dei miei coni gelato.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="foto/foto7.png" alt="Io e mio nonno">
+                        <figcaption>Io e mio nonno...</figcaption>
+                    </figure>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="#contatti" class="cta-button">Contattaci</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE GUSTI -->
+        <section id="gusti">
+            <div class="container">
+                <h2>I nostri gusti</h2>
+                <p class="section-intro">Una selezione essenziale, aggiornata in base alla stagione e alla disponibilità locale.</p>
+                <ul class="feature-list">
+                    <li>Pistacchio di Bronte — tostatura leggera, 100% pasta pura</li>
+                    <li>Nocciola Gentile — sapida al punto giusto</li>
+                    <li>Stracciatella — fiocchi di cioccolato fondente</li>
+                    <li>Fragola Viva — sorbetto senza latte, frutta vera</li>
+                    <li>Crema CuorApe — limone grattugiato e vaniglia</li>
+                    <li>Cioccolato 72% — fondente, pulito, appagante</li>
+                    <li>Tiramisù del Nonno — mascarpone fresco e caffè espresso</li>
+                    <li>Croccante al Caramello Salato — granella di nocciola e toffee artigianale</li>
+                </ul>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="#contatti" class="cta-button">Provali subito</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE EVENTI -->
+        <section id="eventi">
+            <div class="container">
+                <h2>Eventi su misura</h2>
+                <p class="section-intro">Portiamo l’Ape dove vuoi: compleanni, matrimoni, feste aziendali, open day. Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.</p>
+                <div class="gallery">
+                    <figure class="gallery-item">
+                        <img src="feste/festa1.png" alt="Un gelato per strada">
+                        <figcaption>Un gelato per strada.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="feste/festa2.png" alt="Break per un manager">
+                        <figcaption>Il break giusto per un manager.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="feste/festa3.png" alt="Break per un manager">
+                        <figcaption>Il break giusto per un manager.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="feste/festa4.png" alt="Al parco con i bambini">
+                        <figcaption>Al parco coi bambini.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="feste/festa5.png" alt="Festa di Compleanno">
+                        <figcaption>Festa di Compleanno.</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="feste/festa6.png" alt="Fuori da scuola">
+                        <figcaption>Fuori da scuola.</figcaption>
+                    </figure>
+                </div>
+                <div style="text-align: center;">
+                    <button id="open-form-btn" class="cta-button">Richiedi un preventivo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE CONTATTI -->
+        <section id="contatti">
+            <div class="container">
+                <h2>Parliamone</h2>
+                <p class="section-intro">Siamo persone, prima che gelatai. Se vuoi chiederci qualcosa, fallo con semplicità.<br>
+                Email: <a href="mailto:ciao@cuorape.example">ciao@cuorape.example</a><br>
+                Telefono: <a href="tel:+393331234567">+39 333 123 4567</a><br>
+                Base: Bologna (ci muoviamo nelle zone vicine)</p>
+                
+                <div class="social-links">
+                    <a href="#" target="_blank"><img src="img/instagram.png" alt="Instagram"></a>
+                    <a href="#" target="_blank"><img src="img/tiktok.png" alt="TikTok"></a>
+                    <a href="#" target="_blank"><img src="img/youtube.png" alt="YouTube"></a>
+                    <a href="#" target="_blank"><img src="img/linkedin.png" alt="LinkedIn"></a>
+                    <a href="#" target="_blank"><img src="img/x.png" alt="X"></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL PER IL FORM -->
+    <div id="quote-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Richiedi un preventivo</h2>
+            <form id="quote-form">
+                <label for="form-name">Nome e Cognome:</label>
+                <input type="text" id="form-name" name="name" required>
+
+                <label for="form-date">Data Evento:</label>
+                <input type="date" id="form-date" name="date" required>
+
+                <label for="form-time">Orario Evento:</label>
+                <input type="time" id="form-time" name="time">
+
+                <label for="form-notes">Note (es. gusto gelato preferito):</label>
+                <textarea id="form-notes" name="notes" rows="4"></textarea>
+
+                <div class="form-buttons">
+                    <button type="submit" class="cta-button">Invia</button>
+                    <button type="button" class="cancel-button">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PER LIGHTBOX IMMAGINI -->
+    <div id="lightbox-modal" class="modal hidden">
+        <span class="close-button lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img src="" alt="Immagine ingrandita" id="lightbox-img">
+            <p id="lightbox-caption"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 CuorApe – Piccole pause di felicità.</p>
+        </div>
+    </footer>
 
     <script>
-      (() => {
-        const brand = {
-          name: "CuorApe",
-          tagline: "Gelati Artigianali su Ruote",
-          claim: "Piccole pause di felicità, ovunque tu sia.",
-        };
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- LOGICA PER LO SCROLL E NAVIGAZIONE ---
+            const navLinks = document.querySelectorAll('header nav a');
+            const sections = document.querySelectorAll('main section');
 
-        // Sezioni del mini-sito
-        const SECTIONS = ["Home", "Filosofia", "Gusti", "Eventi", "Contatti"];
-        let currentSection = "Home";
-
-        // Canvas setup
-        const canvas = document.getElementById("stage");
-        const ctx = canvas.getContext("2d");
-        let W = 0,
-          H = 0,
-          DPR = Math.min(2, window.devicePixelRatio || 1);
-
-        // Gallery
-        const philosophyGalleryRects = [];
-        let enlargedItem = null;
-        const philosophyGalleryItems = [
-          { src: "img/foto1.png", caption: "Apecar trovata nel fienile del nonno." },
-          { src: "img/foto2.png", caption: "Io che restauro la cabina dell'Apecar." },
-          { src: "img/foto3.png", caption: "Io che restauro il fianco dell'Apecar." },
-          { src: "img/foto4.png", caption: "Pronto per il primo giorno di lavoro." },
-          { src: "img/foto5.png", caption: "La mia nuova Apecar." },
-          { src: "img/foto6.png", caption: "Uno dei miei coni gelato." },
-          { src: "img/foto7.png", caption: "Io e mio nonno..." },
-        ];
-
-        philosophyGalleryItems.forEach((item) => {
-          const img = new Image();
-          img.src = item.src;
-          item.img = img;
-        });
-
-        // Eventi Gallery
-        const eventGalleryRects = [];
-        const eventGalleryItems = [
-            { src: "feste/festa1.png", caption: "Un gelato per strada." },
-            { src: "feste/festa2.png", caption: "Il break giusto per un manager." },
-            { src: "feste/festa3.png", caption: "Il break giusto per un manager." },
-            { src: "feste/festa4.png", caption: "Al parco coi bambini." },
-            { src: "feste/festa5.png", caption: "Festa di Compleanno." },
-            { src: "feste/festa6.png", caption: "Fuori da scuola." },
-        ];
-        eventGalleryItems.forEach((item) => {
-          const img = new Image();
-          img.src = item.src;
-          item.img = img;
-        });
-
-        function resize() {
-          W = Math.floor(window.innerWidth);
-          H = Math.floor(window.innerHeight);
-          canvas.width = Math.floor(W * DPR);
-          canvas.height = Math.floor(H * DPR);
-          canvas.style.width = W + "px";
-          canvas.style.height = H + "px";
-          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        }
-        window.addEventListener("resize", resize);
-        resize();
-
-        // Posizione e dimensioni del box brand (chip)
-        const brandChip = { x: 16, y: 16, w: 240, h: 40 };
-
-        // Stato animazione
-        let t = 0;
-        const clouds = Array.from({ length: 6 }).map((_, i) => ({
-          x: Math.random() * W,
-          y: 50 + Math.random() * (H * 0.35),
-          s: 0.6 + Math.random() * 1.2,
-          w: 120 + Math.random() * 120,
-        }));
-
-        // Utility
-        function roundRectPath(x, y, w, h, r) {
-          const rr = Math.min(r, w / 2, h / 2);
-          ctx.beginPath();
-          ctx.moveTo(x + rr, y);
-          ctx.arcTo(x + w, y, x + w, y + h, rr);
-          ctx.arcTo(x + w, y + h, x, y + h, rr);
-          ctx.arcTo(x, y + h, x, y, rr);
-          ctx.arcTo(x, y, x + w, y, rr);
-          ctx.closePath();
-        }
-
-        function drawButton(btn) {
-          ctx.save();
-          const { x, y, w, h, label, active = false } = btn;
-          // shadow
-          ctx.shadowColor = "rgba(0,0,0,0.12)";
-          ctx.shadowBlur = 12;
-          ctx.shadowOffsetY = 3;
-          // bg
-          ctx.fillStyle = active ? "#00A67D" : "#ffffff";
-          roundRectPath(x, y, w, h, 12);
-          ctx.fill();
-          // border
-          ctx.lineWidth = 1;
-          ctx.strokeStyle = active ? "#008e6b" : "rgba(0,0,0,0.08)";
-          ctx.stroke();
-          // label
-          ctx.fillStyle = active ? "#ffffff" : "#17324d";
-          ctx.font =
-            "600 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(label, x + w / 2, y + h / 2);
-          ctx.restore();
-        }
-
-        function wrapText(text, x, y, maxWidth, lineHeight) {
-          ctx.save();
-          const words = text.split(" ");
-          let line = "";
-          let yy = y;
-          for (let n = 0; n < words.length; n++) {
-            const testLine = line + words[n] + " ";
-            const metrics = ctx.measureText(testLine);
-            if (metrics.width > maxWidth && n > 0) {
-              ctx.fillText(line.trim(), x, yy);
-              line = words[n] + " ";
-              yy += lineHeight;
-            } else {
-              line = testLine;
-            }
-          }
-          if (line) ctx.fillText(line.trim(), x, yy);
-          ctx.restore();
-          return yy;
-        }
-
-        // NAV model (hit test)
-        const nav = {
-          items: [],
-          layout(W) {
-            const pad = 16,
-              btnH = 38;
-            // nav allineata orizzontalmente al brand chip, e centrata verticalmente rispetto ad esso
-            const startX = brandChip.x + brandChip.w + 16;
-            const y = brandChip.y + Math.round((brandChip.h - btnH) / 2);
-            let x = startX;
-            this.items = SECTIONS.map((s) => {
-              const w = Math.max(90, ctx.measureText(s).width + 28);
-              const item = { label: s, x, y, w, h: btnH };
-              x += w + pad;
-              return item;
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-          },
 
-          draw() {
-            this.items.forEach((it) =>
-              drawButton({ ...it, active: it.label === currentSection }),
-            );
-          },
-          hit(mx, my) {
-            return this.items.find(
-              (it) =>
-                mx >= it.x &&
-                mx <= it.x + it.w &&
-                my >= it.y &&
-                my <= it.y + it.h,
-            );
-          },
-        };
+            window.addEventListener('scroll', function () {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 75) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-        // CTA buttons per sezione
-        const ctaButtons = [];
-        function setCTAButtons() {
-          ctaButtons.length = 0;
-          const baseY = H - 120;
-          const pad = 12,
-            btnW = 200,
-            btnH = 44;
-          let x = 16;
-
-          const pushBtn = (label, section, action) => {
-            ctaButtons.push({
-              x,
-              y: baseY,
-              w: btnW,
-              h: btnH,
-              label,
-              section,
-              action,
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
             });
-            x += btnW + pad;
-          };
 
-          if (currentSection === "Home") {
-            pushBtn("Scopri i Gusti", "Gusti");
-            pushBtn("Prenota l'Ape", "Eventi");
-          } else if (currentSection === "Filosofia") {
-            pushBtn("Guarda il Menu", "Gusti");
-            pushBtn("Scrivici", "Contatti");
-          } else if (currentSection === "Gusti") {
-            pushBtn("Chiedi un Assaggio", "Contatti");
-            pushBtn("Prenota l'Ape", "Eventi");
-          } else if (currentSection === "Eventi") {
-            pushBtn("Invia richiesta", "Eventi", "openForm");
-            pushBtn("Parla con noi", "Contatti");
-          } else if (currentSection === "Contatti") {
-            pushBtn("Scrivi su Email", "Contatti", "mailto");
-            pushBtn("Torna alla Home", "Home");
-          }
-        }
-
-        // Form on-canvas per Eventi
-        let formOpen = false;
-        const form = {
-          fields: [
-            {
-              key: "nome",
-              label: "Nome e Cognome",
-              value: "",
-              placeholder: "Mario Rossi",
-            },
-            {
-              key: "email",
-              label: "Email",
-              value: "",
-              placeholder: "mario@example.com",
-            },
-            {
-              key: "data",
-              label: "Data Evento",
-              value: "",
-              placeholder: "2025-06-15",
-            },
-            {
-              key: "luogo",
-              label: "Luogo",
-              value: "",
-              placeholder: "Bologna, Piazza Nettuno",
-            },
-            {
-              key: "note",
-              label: "Note",
-              value: "",
-              placeholder:
-                "Compleanno, 50 persone, gusto preferito: pistacchio",
-            },
-          ],
-          rect: { x: 0, y: 0, w: 0, h: 0 },
-          submitBtn: { x: 0, y: 0, w: 0, h: 0, label: "Invia richiesta" },
-          cancelBtn: { x: 0, y: 0, w: 0, h: 0, label: "Annulla" },
-        };
-
-        function openForm() {
-          formOpen = true;
-          // posizioni calcolate nel draw
-          announce("Modulo prenotazione aperto");
-        }
-        function closeForm() {
-          formOpen = false;
-          announce("Modulo prenotazione chiuso");
-        }
-
-        function announce(text) {
-          const live = document.getElementById("live");
-          if (live) {
-            live.textContent = text;
-          }
-        }
-
-        function drawSky() {
-          const g = ctx.createLinearGradient(0, 0, 0, H);
-          g.addColorStop(0, "#BEE3FF");
-          g.addColorStop(1, "#E8F7FF");
-          ctx.fillStyle = g;
-          ctx.fillRect(0, 0, W, H);
-
-          // Sole
-          ctx.save();
-          ctx.globalAlpha = 0.9;
-          ctx.fillStyle = "#FFD95E";
-          ctx.beginPath();
-          ctx.arc(W - 90, 90, 48, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-
-          // nuvole
-          clouds.forEach((c) => {
-            c.x += 0.2 * c.s;
-            if (c.x > W + c.w) c.x = -c.w;
-            drawCloud(c.x, c.y, c.w, 22 * c.s);
-          });
-
-          // prato
-          ctx.fillStyle = "#D7F8D3";
-          ctx.fillRect(0, H * 0.72, W, H * 0.28);
-          ctx.fillStyle = "#9BE29D";
-          ctx.fillRect(0, H * 0.78, W, H * 0.22);
-        }
-
-        function drawCloud(x, y, w, h) {
-          ctx.save();
-          ctx.fillStyle = "rgba(255,255,255,0.9)";
-          ctx.beginPath();
-          const r = h / 2;
-          ctx.arc(x, y, r, 0, Math.PI * 2);
-          ctx.arc(x + r * 1.4, y - r * 0.2, r * 1.2, 0, Math.PI * 2);
-          ctx.arc(x + r * 2.6, y, r * 1.1, 0, Math.PI * 2);
-          ctx.arc(x + r * 1.6, y + r * 0.7, r * 1.3, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.fill();
-          ctx.restore();
-        }
-
-        function drawApeCar(baseX, baseY, scale) {
-          ctx.save();
-          ctx.translate(baseX, baseY);
-          ctx.scale(scale, scale);
-
-          // ombra
-          ctx.fillStyle = "rgba(0,0,0,0.08)";
-          ctx.beginPath();
-          ctx.ellipse(120, 86, 90, 15, 0, 0, Math.PI * 2);
-          ctx.fill();
-
-          // carrozzeria
-          ctx.fillStyle = "#FF6B6B";
-          roundRectPath(40, 20, 160, 70, 10);
-          ctx.fill();
-
-          // cabina
-          ctx.fillStyle = "#FF8C8C";
-          roundRectPath(40, 20, 80, 60, 10);
-          ctx.fill();
-
-          // finestrino
-          ctx.fillStyle = "#FFFFFF";
-          roundRectPath(50, 30, 50, 30, 6);
-          ctx.fill();
-
-          // sportello/serving window
-          ctx.fillStyle = "#ffffff";
-          roundRectPath(120, 26, 70, 50, 6);
-          ctx.fill();
-
-          // tetto tenda
-          ctx.fillStyle = "#FFD95E";
-          roundRectPath(115, 18, 85, 12, 6);
-          ctx.fill();
-
-          // ruote
-          function wheel(x, y) {
-            ctx.beginPath();
-            ctx.fillStyle = "#333";
-            ctx.arc(x, y, 14, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.fillStyle = "#eee";
-            ctx.arc(x, y, 6, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          wheel(80, 90);
-          wheel(170, 90);
-
-          // logo
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 13px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.textAlign = "center";
-          ctx.fillText("CuorApe", 160, 55);
-
-          // coni “display”
-          ctx.save();
-          const wobble = Math.sin(t / 12) * 2;
-          ctx.translate(155, 76 + wobble);
-          drawCone();
-          ctx.translate(15, -2);
-          drawCone("#67D5B5");
-          ctx.translate(15, 2);
-          drawCone("#A78BFA");
-          ctx.restore();
-
-          ctx.restore();
-        }
-
-        function drawCone(color = "#FF8FB1") {
-          // pallina
-          ctx.beginPath();
-          ctx.fillStyle = color;
-          ctx.arc(0, -12, 7, 0, Math.PI * 2);
-          ctx.fill();
-          // cono
-          ctx.beginPath();
-          ctx.moveTo(-6, -8);
-          ctx.lineTo(6, -8);
-          ctx.lineTo(0, 6);
-          ctx.closePath();
-          ctx.fillStyle = "#E7B27A";
-          ctx.fill();
-          // pattern
-          ctx.strokeStyle = "rgba(0,0,0,0.15)";
-          ctx.lineWidth = 0.8;
-          ctx.beginPath();
-          ctx.moveTo(-3, -7);
-          ctx.lineTo(0, 2);
-          ctx.lineTo(3, -7);
-          ctx.stroke();
-        }
-
-        // Contenuti testuali per sezione
-        const copy = {
-          Home: {
-            title: `${brand.name} – ${brand.tagline}`,
-            body: `Il gelato che ti fa rallentare. Fatto a mano, con ingredienti semplici e stagionali, servito dal nostro Apecar dove c’è bisogno di un sorriso.`,
-          },
-          Filosofia: {
-            title: "La nostra filosofia",
-            body: `Il mio nome è Alberto, e faccio il gelataio. Ma non sono sempre stato un gelataio. Ero un uomo d'affari, sempre di corsa, sempre al telefono, preda di impegni, lavoro, appuntamenti, e... A un certo punto sono andato in burnout. Si, mi sono ammalato. Ho perso il lavoro. Ho lasciato la città. E nel tentativo di raccogliere ciò che era rimasto della mia persona, mi sono rifugiato nella fattoria di mio nonno. Quanti ricordi... Da bambino passavo tutte le estati in quella fattoria. Forse sono stati i momenti più felici della mia vita. Poi, un giorno, nel granaio, trovo la vecchia Apecar del nonno. Ormai è arrugginita, un rottame... E un po' mi somiglia. Forse è per questo che ho deciso di restaurarla. Mentre lavoravo sull'Apecar, piano piano, è nata questa folle idea di dargli una seconda vita, e di trasformarla in un furgoncino dei gelati. E alla fine eccomi qui. Fare il gelataio mi ha aiutato a rinascere, a ritrovare me stesso, e ora sono davvero soddisfatto. Nei miei gelati metto tutto ciò che ho imparato dai miei sbagli. I miei gelati sono lo specchio di ciò che sono ora: pochi gusti, tanta passione, attenzione artigianale. Ogni cono è un invito a respirare e a ricordare i sapori di quando eravamo bambini.`,
-          },
-          Gusti: {
-            title: "I nostri gusti (rotazione stagionale)",
-            body: "Una selezione essenziale, aggiornata in base alla stagione e alla disponibilità locale.",
-            list: [
-              { name: "Dal Lunedì al Venerdì", note: "" },
-              {
-                name: "Pistacchio di Bronte",
-                note: "tostatura leggera, 100% pasta pura",
-              },
-              { name: "Nocciola Gentile", note: "sapida al punto giusto" },
-              { name: "Stracciatella", note: "fiocchi di cioccolato fondente" },
-              {
-                name: "Fragola Viva",
-                note: "sorbetto senza latte, frutta vera",
-              },
-              { name: "Crema CuorApe", note: "limone grattugiato e vaniglia" },
-              { name: "Cioccolato 72%", note: "fondente, pulito, appagante" },
-
-              { name: "Sabato e Domenica", note: "" },
-              {
-                name: "Tiramisù del Nonno",
-                note: "mascarpone fresco e caffè espresso",
-              },
-              {
-                name: "Croccante al Caramello Salato",
-                note: "granella di nocciola e toffee artigianale",
-              },
-              {
-                name: "Amarena CuorApe",
-                note: "crema fiordilatte e amarene candite",
-              },
-              {
-                name: "Menta & Cioccolato",
-                note: "foglie di menta naturale e scaglie fondenti",
-              },
-              {
-                name: "Yogurt e Miele Millefiori",
-                note: "dolce e fresco, con miele locale",
-              },
-              {
-                name: "Pesca Bianca & Basilico",
-                note: "sorbetto aromatico, estivo e profumato",
-              },
-            ],
-          },
-
-          Eventi: {
-            title: "Eventi su misura",
-            body: `Portiamo l’Ape dove vuoi: compleanni, matrimoni, feste aziendali, open day.
-Diamo il meglio nelle situazioni intime: piccoli numeri, grandi attenzioni.`,
-            bullets: [
-              "Piccole dimensioni, a misura del bambino che è in noi",
-              "Essenziale, bontà e simpatia",
-              "Le emozioni di una volta...",
-              "Sguardo dritto negli occhi e battute sincere",
-              "Gusti classici e creativi, sempre genuini",
-              "Ingredienti selezionati e filiera trasparente",
-              "Produzione in micro-lotti, tutti i giorni",
-              "Qualità prima della quantità",
-              "Formato minimal, impatto massimo",
-              "Servizio sorridente e discreto",
-              "Opzioni personalizzate per intolleranze",
-              "Puro Slow-Food, con l'Ape si va piano, ma sano e lontano",
-            ],
-          },
-          Contatti: {
-            title: "Parliamone dal vivo (o via mail)",
-            body: `Siamo persone, prima che gelatai. Se vuoi chiederci qualcosa, fallo con semplicità.`,
-            info: [
-              "Email: ciao@cuorape.example",
-              "Telefono: +39 333 123 4567",
-              "Base: Bologna (ci muoviamo nelle zone vicine)",
-            ],
-          },
-        };
-
-        function drawGallery(galleryItems, galleryRects, startX, startY, maxWidth) {
-          galleryRects.length = 0;
-          const thumbW = 120;
-          const thumbH = 90;
-          const captionH = 40; // Space for caption
-          const gap = 12;
-          let x = startX;
-          let y = startY;
-
-          galleryItems.forEach((item) => {
-            if (x + thumbW > startX + maxWidth) {
-              x = startX;
-              y += thumbH + captionH + gap;
-            }
-            const rect = { x, y, w: thumbW, h: thumbH + captionH, item };
-            galleryRects.push(rect);
-
-            // Draw image
-            ctx.save();
-            ctx.shadowColor = "rgba(0,0,0,0.15)";
-            ctx.shadowBlur = 8;
-            ctx.shadowOffsetY = 2;
-            roundRectPath(x, y, thumbW, thumbH, 8);
-            ctx.fillStyle = "#fff";
-            ctx.fill();
-            ctx.clip(); 
-            if (item.img.complete && item.img.naturalWidth > 0) {
-              const imgRatio = item.img.naturalWidth / item.img.naturalHeight;
-              const thumbRatio = thumbW / thumbH;
-              let sw, sh, sx, sy;
-              if (imgRatio > thumbRatio) {
-                sh = item.img.naturalHeight;
-                sw = sh * thumbRatio;
-                sx = (item.img.naturalWidth - sw) / 2;
-                sy = 0;
-              } else {
-                sw = item.img.naturalWidth;
-                sh = sw / thumbRatio;
-                sx = 0;
-                sy = (item.img.naturalHeight - sh) / 2;
-              }
-              ctx.drawImage(item.img, sx, sy, sw, sh, x, y, thumbW, thumbH);
-            } else {
-              ctx.fillStyle = "#e0e0e0";
-              ctx.fillRect(x, y, thumbW, thumbH);
-            }
-            ctx.restore();
-            
-            // Border
-            ctx.save()
-            roundRectPath(x, y, thumbW, thumbH, 8);
-            ctx.strokeStyle = "rgba(0,0,0,0.1)";
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.restore();
-
-            // Draw caption
-            ctx.fillStyle = "#2b4a66";
-            ctx.font = "500 11px system-ui, -apple-system, Segoe UI, Roboto";
-            ctx.textAlign = "center";
-            wrapText(item.caption, x + thumbW / 2, y + thumbH + 10, thumbW - 4, 13);
-
-
-            x += thumbW + gap;
-          });
-          return y + thumbH + captionH;
-        }
-
-        // Disegna contenuti di sezione
-        function drawSection() {
-          const pad = 24;
-          const colX = 24;
-          const colW = Math.min(640, W - colX * 2);
-          const c = copy[currentSection];
-
-          // Titolo
-          ctx.fillStyle = "#17324d";
-          ctx.font =
-            "800 32px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "top";
-          ctx.fillText(c.title, colX, 110);
-
-          // Sottotitolo / body
-          ctx.font = "400 18px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.fillStyle = "#2b4a66";
-          let bodyEndY = wrapText(c.body, colX, 160, colW, 26) + 8;
-
-          // --- Contenuti specifici per sezione ---
-          
-          if (currentSection === "Filosofia") {
-            bodyEndY = drawGallery(philosophyGalleryItems, philosophyGalleryRects, colX, bodyEndY + 24, colW) + 24;
-          } 
-          else if (currentSection === "Eventi") {
-            let baseY = bodyEndY + 30;
-            const lineH = 26;
-            if (Array.isArray(c.bullets)) {
-              let y = baseY;
-              c.bullets.forEach((text, i) => {
-                const iconX = colX + 4;
-                const textX = colX + 28;
-                ctx.save();
-                ctx.translate(iconX, y + 4);
-                ctx.scale(0.6, 0.6);
-                const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
-                drawCone(colors[i % colors.length]);
-                ctx.restore();
-                ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
-                ctx.fillStyle = "#17324d";
-                ctx.textAlign = "left";
-                ctx.textBaseline = "alphabetic";
-                ctx.fillText(text, textX, y + 8);
-                y += lineH;
-              });
-              bodyEndY = y;
-            }
-            bodyEndY = drawGallery(eventGalleryItems, eventGalleryRects, colX, bodyEndY + 24, colW) + 24;
-          }
-          else {
-            let baseY = bodyEndY + 30;
-            const lineH = 26;
-            let items = [];
-            if (currentSection === "Gusti" && c.list) {
-              items = c.list.map(
-                (item) => `${item.name}${item.note ? " — " + item.note : ""}`,
-              );
-            } else if (currentSection === "Contatti" && c.info) {
-              items = c.info;
-            }
-            
-            if (items.length > 0) {
-              let y = baseY;
-              items.forEach((text, i) => {
-                const iconX = colX + 4;
-                const textX = colX + 28;
-                ctx.save();
-                ctx.translate(iconX, y + 4);
-                ctx.scale(0.6, 0.6);
-                const colors = ["#FF8FB1", "#67D5B5", "#FFD95E"];
-                drawCone(colors[i % colors.length]);
-                ctx.restore();
-                ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto";
-                ctx.fillStyle = "#17324d";
-                ctx.textAlign = "left";
-                ctx.textBaseline = "alphabetic";
-                ctx.fillText(text, textX, y + 8);
-                y += lineH;
-              });
-              bodyEndY = y;
-            }
-          }
-
-          // Claim solo in Home
-          if (currentSection === "Home") {
-            ctx.font = "700 20px system-ui, -apple-system, Segoe UI, Roboto";
-            ctx.fillStyle = "#00A67D";
-            ctx.fillText(brand.claim, colX, Math.max(bodyEndY + 56, H * 0.58));
-          }
-        }
-
-        function drawFooter() {
-          ctx.save();
-          ctx.globalAlpha = 0.9;
-          ctx.fillStyle = "rgba(255,255,255,0.9)";
-          ctx.fillRect(0, H - 64, W, 64);
-          ctx.restore();
-
-          ctx.fillStyle = "#5a768f";
-          ctx.font = "500 12px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "middle";
-          ctx.fillText(
-            "© " +
-              new Date().getFullYear() +
-              " " +
-              brand.name +
-              " — Piccole pause di felicità.",
-            16,
-            H - 32,
-          );
-
-          // CTA
-          setCTAButtons();
-          ctaButtons.forEach((b) => drawButton(b));
-        }
-
-        function drawHeader() {
-          // brand chip (usa brandChip per posizione/dimensioni)
-          ctx.save();
-          ctx.shadowColor = "rgba(0,0,0,0.12)";
-          ctx.shadowBlur = 10;
-          ctx.shadowOffsetY = 2;
-          roundRectPath(brandChip.x, brandChip.y, brandChip.w, brandChip.h, 10);
-          ctx.fillStyle = "#ffffff";
-          ctx.fill();
-
-          // tre “palline” colorate
-          const midY = brandChip.y + brandChip.h / 2;
-          let cx = brandChip.x + 20;
-          ctx.fillStyle = "#FF6B6B";
-          ctx.beginPath();
-          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
-          ctx.fill();
-          cx += 20;
-          ctx.fillStyle = "#FFD95E";
-          ctx.beginPath();
-          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
-          ctx.fill();
-          cx += 20;
-          ctx.fillStyle = "#67D5B5";
-          ctx.beginPath();
-          ctx.arc(cx, midY, 10, 0, Math.PI * 2);
-          ctx.fill();
-
-          // testo brand
-          ctx.fillStyle = "#17324d";
-          ctx.font = "800 16px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "middle";
-          ctx.fillText(brand.name, brandChip.x + 80, brandChip.y + 14 + 6); // titolo
-
-          // ctx.font = "600 12px system-ui, -apple-system, Segoe UI, Roboto";
-          // ctx.fillStyle = "#5a768f";
-          // ctx.fillText(brand.tagline, brandChip.x + 80, brandChip.y + brandChip.h - 12 - 6); // sottotitolo
-
-          ctx.restore();
-
-          // nav
-          nav.layout(W);
-          nav.draw();
-        }
-
-        // Posizionamento Apecar animata nella Home; statica altrove
-        function drawHero() {
-          const y = H * 0.6;
-          const baseX =
-            currentSection === "Home"
-              ? W * 0.55 + Math.sin(t / 35) * 15
-              : W * 0.6;
-          const scale = Math.min(1.3, Math.max(0.8, W / 1000)) * 2;
-          drawApeCar(baseX, y, scale);
-        }
-
-        // Form rendering
-        function drawForm() {
-          if (!formOpen) return;
-
-          const w = Math.min(560, W - 40);
-          // pannello un po' più alto per non schiacciare i bottoni
-          const h = Math.min(560, H - 120);
-          const x = (W - w) / 2;
-          const y = (H - h) / 2;
-          form.rect = { x, y, w, h };
-
-          // backdrop
-          ctx.save();
-          ctx.fillStyle = "rgba(0,0,0,0.25)";
-          ctx.fillRect(0, 0, W, H);
-          ctx.restore();
-
-          // panel
-          ctx.save();
-          ctx.shadowColor = "rgba(0,0,0,0.25)";
-          ctx.shadowBlur = 18;
-          ctx.shadowOffsetY = 6;
-          roundRectPath(x, y, w, h, 14);
-          ctx.fillStyle = "#ffffff";
-          ctx.fill();
-          ctx.restore();
-
-          // title
-          ctx.fillStyle = "#17324d";
-          ctx.font = "800 20px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "top";
-          ctx.fillText("Prenota l'Ape per il tuo evento", x + 18, y + 16);
-
-          // fields
-          ctx.font = "600 12px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.fillStyle = "#5a768f";
-
-          const startY = y + 56;
-          let yy = startY;
-          const labelH = 16,
-            inputH = 32,
-            gap = 18;
-          const inputX = x + 18;
-          const inputW = w - 36;
-
-          form.fields.forEach((f, idx) => {
-            ctx.fillText(f.label, inputX, yy);
-            yy += labelH + 4;
-
-            // input bg
-            ctx.fillStyle = "#f2f6fb";
-            roundRectPath(inputX, yy, inputW, inputH, 8);
-            ctx.fill();
-
-            ctx.fillStyle = f.value ? "#17324d" : "#7f98ad";
-            ctx.font = f.value
-              ? "600 14px system-ui, -apple-system, Segoe UI, Roboto"
-              : "400 14px system-ui, -apple-system, Segoe UI, Roboto";
-            ctx.textAlign = "left";
-            ctx.textBaseline = "middle";
-            const textToShow = f.value || f.placeholder;
-            ctx.fillText(textToShow, inputX + 12, yy + inputH / 2);
-
-            // store clickable rect
-            f.rect = { x: inputX, y: yy, w: inputW, h: inputH };
-
-            // niente gap dopo l’ultimo campo
-            yy += inputH + (idx === form.fields.length - 1 ? 0 : gap);
-          });
-
-          // posizione bottoni: sempre sotto i campi, con margine
-          const buttonsY = Math.max(y + h - 18 - 38, yy + 24);
-          form.submitBtn = {
-            x: x + w - 18 - 160,
-            y: buttonsY,
-            w: 160,
-            h: 38,
-            label: "Invia richiesta",
-          };
-          form.cancelBtn = {
-            x: x + 18,
-            y: buttonsY,
-            w: 120,
-            h: 38,
-            label: "Annulla",
-          };
-          drawButton(form.cancelBtn);
-          drawButton({ ...form.submitBtn, active: true });
-        }
-
-        function drawLightbox() {
-          if (!enlargedItem) return;
-
-          ctx.save();
-          // Backdrop
-          ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-          ctx.fillRect(0, 0, W, H);
-
-          // Image
-          const pad = 80; // More padding
-          const maxW = W - pad * 2;
-          const maxH = H - pad * 2;
-          const img = enlargedItem.img;
-          const imgRatio = img.naturalWidth / img.naturalHeight;
-          
-          let w = img.naturalWidth;
-          let h = img.naturalHeight;
-
-          if (w > maxW) {
-            w = maxW;
-            h = w / imgRatio;
-          }
-          if (h > maxH) {
-            h = maxH;
-            w = h * imgRatio;
-          }
-
-          const x = (W - w) / 2;
-          const y = (H - h) / 2;
-          
-          ctx.shadowColor = "rgba(0,0,0,0.5)";
-          ctx.shadowBlur = 30;
-          ctx.shadowOffsetY = 10;
-
-          ctx.drawImage(img, x, y, w, h);
-          ctx.shadowColor = "transparent"; // No shadow for text
-
-          // Caption
-          ctx.fillStyle = "#fff";
-          ctx.textAlign = "center";
-          ctx.font = "400 16px system-ui, -apple-system, Segoe UI, Roboto";
-          wrapText(enlargedItem.caption, W / 2, y + h + 20, W - 40, 22);
-          
-          // Close button (text)
-          ctx.font = "600 14px system-ui, -apple-system, Segoe UI, Roboto";
-          ctx.fillText("Chiudi (clicca ovunque)", W / 2, H - 24);
-
-          ctx.restore();
-        }
-
-        // Input “virtuale” per campi form (prompt)
-        function promptField(field) {
-          const v = window.prompt(
-            field.label,
-            field.value || field.placeholder || "",
-          );
-          if (v !== null) field.value = v.trim();
-        }
-
-        // Gestione click
-        canvas.addEventListener("click", (e) => {
-          const rect = canvas.getBoundingClientRect();
-          const mx = e.clientX - rect.left;
-          const my = e.clientY - rect.top;
-
-          // Lightbox ha priorità
-          if (enlargedItem) {
-            enlargedItem = null;
-            return;
-          }
-
-          // Form aperto ha priorità
-          if (formOpen) {
-            // click campi
-            for (const f of form.fields) {
-              const r = f.rect;
-              if (
-                r &&
-                mx >= r.x &&
-                mx <= r.x + r.w &&
-                my >= r.y &&
-                my <= r.y + r.h
-              ) {
-                promptField(f);
-                return;
-              }
-            }
-            // submit / cancel
-            if (hit(mx, my, form.submitBtn)) {
-              // validazione semplice
-              const nome =
-                form.fields.find((f) => f.key === "nome")?.value || "";
-              const email =
-                form.fields.find((f) => f.key === "email")?.value || "";
-              if (!nome || !email || !email.includes("@")) {
-                alert("Per favore inserisci almeno Nome ed Email validi.");
-                return;
-              }
-              const data =
-                form.fields.find((f) => f.key === "data")?.value || "";
-              const luogo =
-                form.fields.find((f) => f.key === "luogo")?.value || "";
-              const note =
-                form.fields.find((f) => f.key === "note")?.value || "";
-
-              const subject = encodeURIComponent(`Richiesta Ape – ${nome}`);
-              const body = encodeURIComponent(
-                `Ciao CuorApe,
-vorrei prenotare l'Ape per un evento.
-
-Nome: ${nome}
-Email: ${email}
-Data: ${data}
-Luogo: ${luogo}
-
-Note:
-${note}
-
-Grazie!`,
-              );
-              const mail = `mailto:ciao@cuorape.example?subject=${subject}&body=${body}`;
-              window.location.href = mail;
-              closeForm();
-              return;
-            }
-            if (hit(mx, my, form.cancelBtn)) {
-              closeForm();
-              return;
-            }
-            // click fuori chiude
-            if (!pointInRect(mx, my, form.rect)) {
-              closeForm();
-            }
-            return;
-          }
-
-          // Gallery
-          if (currentSection === "Filosofia") {
-            const clickedItem = philosophyGalleryRects.find((r) => hit(mx, my, r));
-            if (clickedItem) {
-              enlargedItem = clickedItem.item;
-              return;
-            }
-          } else if (currentSection === "Eventi") {
-            const clickedItem = eventGalleryRects.find((r) => hit(mx, my, r));
-            if (clickedItem) {
-              enlargedItem = clickedItem.item;
-              return;
-            }
-          }
-
-          // nav
-          const n = nav.hit(mx, my);
-          if (n) {
-            currentSection = n.label;
-            announce(`Sezione ${currentSection}`);
-            return;
-          }
-
-          // CTA
-          const b = ctaButtons.find((b) => hit(mx, my, b));
-          if (b) {
-            if (b.action === "openForm") {
-              openForm();
-              return;
-            }
-            if (b.action === "mailto") {
-              window.location.href =
-                "mailto:ciao@cuorape.example?subject=Info%20CuorApe&body=Ciao%20CuorApe%2C%20vorrei%20maggiori%20informazioni.";
-              return;
-            }
-            currentSection = b.section || currentSection;
-            announce(`Sezione ${currentSection}`);
-          }
+            // --- LOGICA PER IL MODAL DEL FORM ---
+            const quoteModal = document.getElementById('quote-modal');
+            const openBtn = document.getElementById('open-form-btn');
+            const closeBtn = quoteModal.querySelector('.close-button');
+            const cancelBtn = quoteModal.querySelector('.cancel-button');
+            const quoteForm = document.getElementById('quote-form');
+
+            const openQuoteModal = () => quoteModal.classList.remove('hidden');
+            const closeQuoteModal = () => quoteModal.classList.add('hidden');
+
+            openBtn.addEventListener('click', openQuoteModal);
+            closeBtn.addEventListener('click', closeQuoteModal);
+            cancelBtn.addEventListener('click', closeQuoteModal);
+            quoteModal.addEventListener('click', function(e) {
+                if (e.target === quoteModal) {
+                    closeQuoteModal();
+                }
+            });
+
+            quoteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('form-name').value;
+                const date = document.getElementById('form-date').value;
+                const time = document.getElementById('form-time').value;
+                const notes = document.getElementById('form-notes').value;
+                const subject = `Richiesta preventivo evento da ${name}`;
+                const body = `Ciao CuorApe,\n\nVorrei richiedere un preventivo per un evento.\n\n- Nome e Cognome: ${name}\n- Data Evento: ${date}\n- Orario Evento: ${time}\n- Note: ${notes}\n\nGrazie!\n`;
+                window.location.href = `mailto:ciao@cuorape.example?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                closeQuoteModal();
+            });
+
+            // --- LOGICA PER IL LIGHTBOX DELLE IMMAGINI ---
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const galleryImages = document.querySelectorAll('.gallery-item img');
+            const lightboxCloseBtn = lightboxModal.querySelector('.lightbox-close');
+
+            const openLightbox = () => lightboxModal.classList.remove('hidden');
+            const closeLightbox = () => lightboxModal.classList.add('hidden');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    const figcaption = img.nextElementSibling;
+                    lightboxImg.src = img.src;
+                    lightboxCaption.textContent = figcaption ? figcaption.textContent : '';
+                    openLightbox();
+                });
+            });
+
+            lightboxCloseBtn.addEventListener('click', closeLightbox);
+            lightboxModal.addEventListener('click', function(e) {
+                // Chiude solo se si clicca sullo sfondo e non sull'immagine
+                if (e.target === lightboxModal) {
+                    closeLightbox();
+                }
+            });
         });
-
-        function hit(mx, my, btn) {
-          if (!btn) return false;
-          return (
-            mx >= btn.x &&
-            mx <= btn.x + btn.w &&
-            my >= btn.y &&
-            my <= btn.y + btn.h
-          );
-        }
-        function pointInRect(mx, my, r) {
-          if (!r) return false;
-          return mx >= r.x && mx <= r.x + r.w && my >= r.y && my <= r.y + r.h;
-        }
-
-        // LOOP
-        function loop() {
-          t++;
-          ctx.clearRect(0, 0, W, H);
-          drawSky();
-          drawHeader();
-          drawSection();
-          drawHero();
-          drawFooter();
-          drawForm();
-          drawLightbox();
-          requestAnimationFrame(loop);
-        }
-        loop();
-      })();
     </script>
-
+</body>
+</html>

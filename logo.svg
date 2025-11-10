@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 120">
+  
+  <!-- Palline sopra la A -->
+  <circle cx="186" cy="42" r="6" fill="#FF6B6B"/>
+  <circle cx="198" cy="38" r="6" fill="#FFD95E"/>
+  <circle cx="210" cy="42" r="6" fill="#67D5B5"/>
+
+  <!-- Testo -->
+  <text x="50%" y="82" text-anchor="middle"
+        font-family="Poppins, Arial, Helvetica, sans-serif"
+        font-weight="800" font-size="46"
+        fill="#17324D" letter-spacing="1">
+    CuorApe
+  </text>
+
+  <!-- Curva morbida -->
+  <path d="M50 96 C120 112, 220 112, 290 96"
+        fill="none" stroke="#FFD95E" stroke-width="4"
+        stroke-linecap="round"/>
+</svg>
