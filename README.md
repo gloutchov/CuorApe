@@ -46,8 +46,9 @@ Partendo da queste basi, ecco ciò che è stato usato:
 ## Account Necessari
 
 1. ChatGPT Plus
-2. GitHub (Per la distribuzione dei files e l'hosting del sito)
-3. Youtube (Per la distribuzione dei files video prodotti)
+2. VPN (Per l'utilizzo di Sora)
+3. GitHub (Per la distribuzione dei files e l'hosting del sito)
+4. Youtube (Per la distribuzione dei files video prodotti)
 
 ## Idea Sviluppata
 CuorApe è una attività artigianale avviata da un manager andato in burnout.
