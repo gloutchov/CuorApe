@@ -34,7 +34,7 @@ Partendo da queste basi, ecco ciò che è stato usato:
    - Browser: OpenAI Atlas
 2. Brainstorming con AI: Progetto chatGPT con istruzioni ad hoc
 3. Definizione del Brand: Progetto chatGPT con istruzioni ad hoc
-4. Creazione Landing Page: Progetto chatGPT con istruzioni ad hoc
+4. Creazione Landing Page: Progetto chatGPT con istruzioni ad hoc + Codex CLI
 5. Creazione di foto realistiche del brand da inserire sul sito
 6. Sviluppo della Campagna di Marketing: Progetto chatGPT con istruzioni ad hoc
 7. Creazione dei Video Promozionali:
